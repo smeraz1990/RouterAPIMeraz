@@ -8,8 +8,6 @@ const productos = [
     { "title": "Producto3", "price": "8.30", "thumbnail": "foto 3", "id": 3 }
 ]
 
-
-
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
@@ -20,6 +18,13 @@ router.get('/productos', (req, res) => {
 
 router.get('/productos/:id', (req, res) => {
     const { id } = req.params
+    if (id <= 0) {
+        res.json({ error: "No exite el id 0" })
+    }
+    if (id > productos.length) {
+        res.json({ error: 'producto no encontrado' })
+    }
+
     res.json(productos[Number(id) - 1])
     return
 })
